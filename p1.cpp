@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string.h>
+//#define printf("\e[2J\e[H")
 using namespace std;
 
 //Defning TIME class 
@@ -20,14 +21,17 @@ inline void TIME::set_data(int h,int m,int s){
 
 inline void TIME::get_data(void){
 	int h,m,s;
-	char str[2];
+	char str[13];
 	cout<<"Enter time in AM/PM or 24-hour format\n";
-	cout<<"Use this format [HR]:[MIN]:[SEC](AM/PM/XX)\n";
+	cout<<"Use this format [HR]:[MIN]:[SEC](AM/PM)\n";
 	cout<<"Enter XX if 24 hour format is used\n";
-	scanf("%2d:%2d:%2d%s",&h,&m,&s,str);
-	if(str[0]==' '){set_data(h,m,s);}
-	else if(str[0]='A'){set_data(h,m,s);}
-	else if(str[0]='P'){set_data(h+12,m,s);}
+	cin>>str;
+	h=(int)(str[0]-48)*10+(int)(str[1]-48);
+	m=(int)(str[3]-48)*10+(int)(str[4]-48);
+	s=(int)(str[6]-48)*10+(int)(str[7]-48);
+	if(str[9]=='\0'){set_data(h,m,s);}
+	else if(str[9]='A'){set_data(h,m,s);}
+	else if(str[9]='P'){set_data(h+12,m,s);}
 };
 //------------------------------------------------------------------------
 inline void TIME::display_data(void){
@@ -56,10 +60,26 @@ inline void TIME::add_min(void){
 
 //------------------------------------------------------------------------
 int main(){
-	TIME obj;
-	obj.get_data();
-	obj.display_data();
-	obj.add_min();
-	obj.display_data();
+	int choice;
+	while(1){
+		//printf("\e[2J\e[H");
+		cout<<"----------------------------------------------------------\n";
+		cout<<"Press to choose the option :\n";
+		cout<<"(0)To exit menu\n(1)Create a time object\n";
+		cin>>choice;
+		if(choice==0){break;}
+		else{
+			TIME obj;
+			obj.get_data();
+			//printf("\e[2J\e[H");
+			cout<<"Press to choose the option :\n";
+			cout<<"(0)To exit menu\n(1)Display object\n(2)Add mintute\n";
+			cin>>choice;
+			if(choice==0){break;}
+			else if(choice==1){obj.display_data();}
+			else{obj.add_min();obj.display_data();};
+		};
+		
+	};
 	return 0;
-};
+}
