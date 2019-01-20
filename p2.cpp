@@ -9,14 +9,18 @@ class complex{
 		
 		//void display_data(void);
 		friend ostream & operator << (ostream &out, complex &c); 
-   		 friend istream & operator >> (istream &in,  complex &c); 
-		void operator >>(istream &);
-		void operator <<(ostream &);
+   		friend istream & operator >> (istream &in,  complex &c); 
 		complex operator +(complex);
 		complex operator -(complex);
 		
 };
-  
+ 
+//Class function definitions
+void complex::set_data(float r,float i){
+	real=r;
+	img=i;
+};
+
 ostream & operator << (ostream &out, complex &c) { 
     out << c.real; 
     out <<"+("<< c.img<< ")i\n"; 
@@ -28,20 +32,7 @@ istream & operator >> (istream &in, complex &c) {
     in >> c.img; 
     return in; 
 };
-//Class function definitions
-void complex::set_data(float r,float i){
-	real=r;
-	img=i;
-};
-void complex::operator>>(istream &in){
-	in>>real;
-	in>>img;
-};
 
-void complex::operator<<(ostream &out){
-	out<<real;
-	out<<img;
-};
 complex complex::operator +(complex obj){
 	complex result;
 	result.set_data(real+obj.real,img+obj.img);
@@ -58,6 +49,7 @@ complex complex::operator -(complex obj){
 	cout<<real<<"+"<<img<<"i\n";
 };*/
 
+//Main function
 int main(){
 	complex a,b,c;
 	cin>>a;
