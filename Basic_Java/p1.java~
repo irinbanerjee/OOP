@@ -1,0 +1,91 @@
+import java.util.*;
+
+class student{
+	String roll;
+	String name;
+	String course;
+	String addmission_date;
+	
+
+	
+	public void set_data(){
+		Scanner s=new Scanner(System.in);
+		System.out.print("Enter your name: ");
+		name=s.nextLine();
+		System.out.print("Enter your department: ");
+		course=s.nextLine();
+	};
+
+	public void display_data(){
+		System.out.println("Roll :"+roll);
+		System.out.print("Name :" + name+"\n");
+		System.out.println("Department :"+course);
+		System.out.println("Addmission Date :"+addmission_date);
+	};
+
+	public String return_dept(){return course;};
+	
+	public void set_roll(String r){roll=r;}
+};
+
+class student_file{
+	public int BCSE=0;
+	public int ETCE=0;
+	public int BCHE=0;
+	public int BCVE=0;
+
+	public student BCSE_file[];
+	public student ETCE_file[];
+	public student BCHE_file[];
+	public student BCVE_file[];
+	public String gen_roll(String dept){
+		String roll;
+		Calendar date=Calendar.getInstance();
+		roll=dept+"/"+String(date.get(Calendar.YEAR)).substring(2,4);
+		if(dept=="BCSE"){
+			if(BCSE<10){roll=roll+"00"+BCSE;}
+			else if(BCSE>=10 && BCSE<=99){roll=roll+"0"+String(BCSE);}
+			else{roll=roll+String(BCSE);};
+		}
+		else if(dept=="ETCE"){
+			if(ETCE<10){roll=roll+"00"+String(ETCE);}
+			else if(ETCE>=10 && ETCE<=99){roll=roll+"0"+String(ETCE);}
+			else{roll=roll+String(ETCE);};
+		}
+		else if(dept=="BCHE"){
+			if(BCHE<10){roll=roll+"00"+String(BCHE);}
+			else if(BCHE>=10 && BCHE<=99){roll=roll+"0"+String(BCHE);}
+			else{roll=roll+String(BCHE);};
+		}
+		else if(dept=="BCVE"){
+			if(BCVE<10){roll=roll+"00"+String(BCVE);}
+			else if(BCVE>=10 && BCVE<=99){roll=roll+"0"+String(BCVE);}
+			else{roll=roll+String(BCVE);};
+		};
+		return roll;
+	}
+
+	public void admit(){
+		while(1){
+			String choice;
+
+			student obj =new student();
+			obj.set_data();
+			obj.set_roll(this.gen_roll(obj.return_dept()));
+			obj.display_data();
+
+			System.out.println("Do you wish to exit(y/n)? ");
+			Scanner s=new Scanner(System.in);
+			if(s=='y'){return;};
+
+		}
+	}
+	
+}
+public class p1{
+	public static void main(String[] args){
+		student_file file=new student_file();
+		file.admit();
+		
+	};
+};
